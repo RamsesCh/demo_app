@@ -6,12 +6,15 @@ export async function GET(){
     try {
         await dbConnection();
         const photos = await Photo.find();
-        return NextResponse.json({
-            data: photos
-        })      
-    } catch (err: any) {
-        return NextResponse.json(err.message, {
-            status: 500,
-        })
+        return NextResponse.json(
+            { data: photos},
+            { status: 200 }
+        )      
+    } catch (error) {
+        console.error(error);
+        return NextResponse.json(
+            {error: 'Internal server error'},
+            {status: 500}
+        )
     }
 }
